@@ -11,14 +11,14 @@ class SHT35:
         self.addr = 0x45
         self.cmd_msb = 0x2C
         self.cmd_lsb = 0x06 # high repeatability
-        i2c = smbus.SMBus(1)
+        self.i2c = smbus.SMBus(1)
         self.buffer_size = 12
 
     def read(self):
 
-        i2c.write_i2c_block_data(self.addr, self.cmd_msb, [self.cmd_lsb])
+        self.i2c.write_i2c_block_data(self.addr, self.cmd_msb, [self.cmd_lsb])
         time.sleep(0.05)
-        data = i2c.read_i2c_block_data(self.addr, 0x00, self.buffer_size)
+        data = self.i2c.read_i2c_block_data(self.addr, 0x00, self.buffer_size)
         time.sleep(0.05)
 
         # Devide data into counts Temperature
