@@ -10,7 +10,7 @@ class SHT35:
 
         self.addr = 0x45
         self.cmd_msb = 0x2C
-        self.cmd_lsb = 0x06 # high repeatability
+        self.cmd_lsb = 0x06  # high repeatability
         self.i2c = smbus.SMBus(1)
         self.buffer_size = 12
 
@@ -25,7 +25,7 @@ class SHT35:
         t_data = data[0] << 8 | data[1]
         # Devide data into counts Humidity
         h_data = data[3] << 8 | data[4]
-        return calculation(t_data, h_data)
+        return self.calculation(t_data, h_data)
 
     @staticmethod
     def calculation(t_data, h_data):
@@ -33,6 +33,7 @@ class SHT35:
         Temperature = -45.0 + 175.0 * float(t_data) / 65535.0
         return Humidity, Temperature
 
-if __name__ =="__main__":
-    sht35=SHT35()
+
+if __name__ == "__main__":
+    sht35 = SHT35()
     print(sht35.read())
